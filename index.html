@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verde – Organic by Default</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --green: #1f7a4a;
+      --light-green: #e9f6ef;
+      --dark: #0f2f1e;
+      --accent: #ffd166;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* NAVBAR */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    header h1 {
+      color: var(--green);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      position: relative;
+      padding: 8px 12px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--green);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(31,122,74,0.3);
+      margin-left: 20px;
+    }
+
+    .cart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(31,122,74,0.4);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent);
+      color: var(--dark);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 24px;
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 80px;
+      background: linear-gradient(120deg, var(--light-green), #ffffff);
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h2 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      color: var(--green);
+    }
+
+    .hero-text p {
+      margin: 20px 0;
+      font-size: 1.1rem;
+    }
+
+    .hero-text span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 32px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .hero-img {
+      width: 450px;
+      height: 450px;
+      background: url('https://tci.cornell.edu/wp-content/uploads/2021/03/Green_Beds_farmlands_India.jpg') center/cover;
+      border-radius: 50%;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    }
+
+    section {
+      padding: 140px 80px;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-title h2 {
+      font-size: 2.8rem;
+      color: var(--green);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 25px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      transition: transform 0.4s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-12px);
+    }
+
+    .product-card img {
+      width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 25px;
+      padding: 40px;
+      position: relative;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    /* CART SIDEBAR */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100vh;
+      background: white;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+      z-index: 3000;
+      transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      overflow-y: auto;
+    }
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
+    .cart-header {
+      padding: 25px;
+      border-bottom: 1px solid var(--light-green);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      padding: 20px 25px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-details h4 {
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--light-green);
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-total {
+      padding: 25px;
+      border-top: 2px solid var(--green);
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    /* PAYMENT MODAL */
+    .payment-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 4000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .payment-modal-content {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 25px;
+      overflow-y: auto;
+      position: relative;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .payment-header {
+      padding: 30px 25px 20px;
+      text-align: center;
+      border-bottom: 2px solid var(--light-green);
+    }
+
+    .payment-header h2 {
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .payment-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .payment-body {
+      padding: 30px 25px;
+    }
+
+    .payment-method {
+      border: 2px solid #eee;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #f8f9fa;
+    }
+
+    .payment-method:hover,
+    .payment-method.active {
+      border-color: var(--green);
+      background: var(--light-green);
+      transform: translateY(-2px);
+    }
+
+    .payment-method-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .payment-method h4 {
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+
+    .payment-form {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .payment-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+
+    .upi-qr {
+      text-align: center;
+      padding: 20px;
+      border: 2px dashed var(--green);
+      border-radius: 15px;
+      background: var(--light-green);
+    }
+
+    .upi-qr img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 15px;
+    }
+
+    .pay-now-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .pay-now-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .success-modal {
+      background: rgba(0,0,0,0.8);
+      z-index: 5000;
+    }
+
+    .success-content {
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    /* ABOUT & FOUNDERS */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about img {
+      width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .founders {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 60px;
+      align-items: center;
+    }
+
+    .founder-card {
+      background: rgba(233, 246, 239, 0.5);
+      padding: 40px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .founder-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--green), var(--accent));
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 5px solid white;
+      flex-direction: column;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 80px 80px 60px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 120px;
+      }
+      .hero-img { margin-top: 40px; }
+      .about { grid-template-columns: 1fr; gap: 40px; }
+      header { padding: 15px 30px; }
+      section { 
+        padding: 100px 30px 80px;
+        margin-bottom: 30px;
+      }
+      .nav-links { gap: 20px; }
+      .cart-btn { margin-left: 15px; padding: 10px 14px; }
+      .products { gap: 30px; }
+      .payment-modal-content { margin: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>VERDÉ</h1>
+    <div class="nav-links">
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#founders">Founders</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cart-btn" id="cartToggle">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+      <i class="fas fa-times close-cart" id="closeCart"></i>
+    </div>
+    <div id="cartItems">
+      <p style="text-align: center; padding: 40px; color: #666;">Your cart is empty</p>
+    </div>
+    <div class="cart-total">
+      <div>Total: <span id="cartTotal">₹0</span></div>
+      <button class="checkout-btn" id="checkoutBtn" style="display: none;">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div id="paymentModal" class="payment-modal">
+    <div class="payment-modal-content">
+      <div class="payment-header">
+        <h2>Secure Checkout</h2>
+        <div class="payment-amount" id="paymentAmount">₹0</div>
+        <p>Order #<span id="orderId"></span></p>
+      </div>
+      <div class="payment-body">
+        <h3 style="color: var(--green); margin-bottom: 20px;">Choose Payment Method</h3>
+        
+        <div class="payment-method active" data-method="upi">
+          <div class="payment-method-icon">
+            <i class="fab fa-google-pay"></i>
+          </div>
+          <h4>UPI</h4>
+          <p>Pay using PhonePe, Google Pay, Paytm, etc.</p>
+        </div>
+
+        <div class="payment-method" data-method="card">
+          <div class="payment-method-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <h4>Credit/Debit Card</h4>
+          <p>Visa, Mastercard, RuPay, etc.</p>
+        </div>
+
+        <div class="payment-method" data-method="netbanking">
+          <div class="payment-method-icon">
+            <i class="fas fa-university"></i>
+          </div>
+          <h4>Net Banking</h4>
+          <p>All major banks</p>
+        </div>
+
+        <!-- UPI Form -->
+        <div id="upiForm" class="payment-form active">
+          <div class="upi-qr">
+            <img src="https://via.placeholder.com/150x150/1f7a4a/ffffff?text=UPI+QR" alt="UPI QR Code">
+            <p>Scan QR code or enter UPI ID</p>
+            <div class="form-group">
+              <label>UPI ID</label>
+              <input type="text" id="upiId" placeholder="yourid@paytm">
+            </div>
+            <button class="pay-now-btn" onclick="processPayment('upi')">Pay Now</button>
+          </div>
+        </div>
+
+        <!-- Card Form -->
+        <div id="cardForm" class="payment-form">
+          <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Expiry (MM/YY)</label>
+              <input type="text" id="expiryDate" placeholder="12/25" maxlength="5">
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="text" id="cvv" placeholder="123" maxlength="4">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Cardholder Name</label>
+            <input type="text" id="cardName" placeholder="John Doe">
+          </div>
+          <button class="pay-now-btn" onclick="processPayment('card')">Pay Securely</button>
+        </div>
+
+        <!-- Netbanking Form -->
+        <div id="netbankingForm" class="payment-form">
+          <div class="form-group">
+            <label>Select Bank</label>
+            <select id="bankSelect" style="width: 100%; padding: 12px 15px; border: 2px solid #eee; border-radius: 10px;">
+              <option value="">Choose your bank</option>
+              <option value="sbi">State Bank of India</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="icici">ICICI Bank</option>
+              <option value="axis">Axis Bank</option>
+              <option value="pnb">Punjab National Bank</option>
+            </select>
+          </div>
+          <button class="pay-now-btn" onclick="processPayment('netbanking')">Pay Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div id="successModal" class="payment-modal success-modal">
+    <div class="payment-modal-content">
+      <div class="success-content">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your order. Your organic products are on their way!</p>
+        <p><strong>Order ID: <span id="successOrderId"></span></strong></p>
+        <button class="btn" style="width: 100%; margin-top: 20px;" onclick="completeOrder()">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h2>Organic by <span>Default</span></h2>
+      <p>Verde delivers 100% organic wheat, millets, rice, turmeric, pepper, salt, coriander powder and jowar — straight from trusted farms to your home.</p>
+      <a href="#products" class="btn">Explore Products</a>
+    </div>
+    <div class="hero-img"></div>
+  </section>
+
+  <section id="products">
+    <div class="section-title">
+      <h2>Our Products</h2>
+    </div>
+    <div class="products">
+      <div class="product-card" data-product="wheat">
+        <img src="https://ugc.futurelearn.com/uploads/images/3f/96/3f9634f9-12e1-4eb6-a537-c661579dfdfc.jpg">
+        <h3>Organic Wheat</h3>
+      </div>
+      <div class="product-card" data-product="millets">
+        <img src="https://prd-upmarket.s3.ap-south-1.amazonaws.com/AA0056/generated/ar16x9/large/List-of-millets-Large.jpg">
+        <h3>Millets</h3>
+      </div>
+      <div class="product-card" data-product="rice">
+        <img src="https://www.nextechagrisolutions.com/blog/wp-content/uploads/2014/11/Rice-Parts.jpg">
+        <h3>Rice</h3>
+      </div>
+      <div class="product-card" data-product="turmeric">
+        <img src="https://vibrantliving.in/cdn/shop/files/TurmericPowder.png?v=1731060171&width=2048">
+        <h3>Turmeric</h3>
+      </div>
+      <div class="product-card" data-product="pepper">
+        <img src="https://mamiyarskitchen.com/wp-content/uploads/2022/08/heap-black-pepper-powder-milled-peppercorns-wooden-background-dried-spice-corn-concept-142354742.jpg">
+        <h3>Pepper</h3>
+      </div>
+      <div class="product-card" data-product="jowar">
+        <img src="https://vibrantliving.in/cdn/shop/files/JowarMillet.png?v=1731059461&width=2048">
+        <h3>Jowar</h3>
+      </div>
+      <div class="product-card" data-product="bajra">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiPtIFnv8R1Vl1ib5EcQGhES_QbUrgPWo-jAK9G6qmAhnFt3p1MNy1m-xo6Kz3wK93pIRx3bAB6jHPVkyPvAhWMkfgvqK1x4Kd3xrJEw&s=10">
+        <h3>Bajra</h3>
+      </div>
+      <div class="product-card" data-product="jaggery">
+        <img src="https://www.dhampurgreen.com/cdn/shop/articles/1.png?v=1753444662">
+        <h3>Jaggery</h3>
+      </div>
+      <div class="product-card" data-product="mirch">
+        <img src="https://tonsvalley.shop/wp-content/uploads/2024/05/WhatsApp-Image-2021-12-18-at-13.59.45.jpeg">
+        <h3>Mirch</h3>
+      </div>
+      <div class="product-card" data-product="honey">
+        <img src="https://cdn.mos.cms.futurecdn.net/zcz8f72orNC9GKgm3tbqMY.jpg">
+        <h3>Honey</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about">
+      <div>
+        <h2>Why Verde?</h2>
+        <p><strong>Purity Reclaimed.</strong></p>
+        <p>We faced it firsthand—health crises from a toxic wheat brand packed with chemicals. Headaches, fatigue, betrayal. The truth? Our food isn't pure.</p>
+        <p>That's why my partner and I launched Verde: a revolt against adulterated grains. We partner directly with organic farmers, sourcing wheat, rice, and spices grown chemical-free in nature's embrace.</p>
+        <p><strong>Organic by default</strong>—our unbreakable promise. No middlemen. Fair farmer prices. Soil regenerated, not ravaged. Verde delivers thriving health, not hidden poisons.</p>
+        <p>From farm to fork, pure, sustainable, life-giving. Join the movement. Reclaim your plate. <strong>Choose Verde. Choose purity.</strong></p>
+      </div>
+      <img src="https://hips.hearstapps.com/hmg-prod/images/indoor-plants-for-mental-health-669e9bb4e8793.jpg?crop=0.673xw:1.00xh;0.322xw,0&resize=640:*" />
+    </div>
+  </section>
+
+  <section id="founders">
+    <div class="section-title">
+      <h2>About the Founders</h2>
+    </div>
+    <div class="founders">
+      <div class="founder-card">
+        <div class="founder-photo">JAGAT PRATAP SINGH BHASKAR</div>
+        <h3>Jagat Pratap Singh Bhaskar</h3>
+        <p><strong>From government service roots to Verde's visionary heart.</strong> Growing up in a disciplined government family taught Jagat resilience and public service. But watching his family's dedication made him realize: <em>"Jobs pay bills, but business builds legacies."</em></p>
+        <p>At Newton School of Technology pursuing B.Tech CSE (AI & ML), Jagat's tech brain + farmer-first passion = Verde's unbreakable purity promise. Every morning, he wakes up hungry to solve India's food crisis.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-photo">RAKSHAT AGGRAWAL<br><small></small></div>
+        <h3>Rakshat Aggrawal</h3>
+        <p><strong>Teacher's son turned food revolution commander.</strong> Raised in classrooms filled with knowledge and discipline, Rakshat learned teaching isn't just in schools—it's transforming lives through pure food. "We don't just sell grains, we deliver health revolutions."</p>
+        <p>Also at Newton School of Technology mastering B.Tech CSE (AI & ML), Rakshat brings analytical precision to Verde's farmer partnerships. His fire? Building something bigger than any 9-5 could contain.</p>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 40px;">
+      <p><em>"Growing up watching our families serve others, we realized jobs keep you comfortable, but business makes you unstoppable. Verde is our rebellion—waking up every day with fire in our hearts to purify India's plate, one organic grain at a time."</em></p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <h3>VERDÉ</h3>
+    <p>Organic by Default 🌱</p>
+    <p>Email: hello@verdeorganic.com</p>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('verdeCart')) || [];
+    let orderId = '';
+
+    const productData = {
+      wheat: {
+        title: "Organic Wheat",
+        price: 89,
+        details: "Sourced from certified organic farms in the fertile Gangetic plains. Hand-harvested under full moon cycles, naturally sun-dried on clean bamboo mats. Stored in breathable jute bags with activated charcoal pouches to absorb moisture. Lab-tested zero pesticides, heavy metals, or adulterants. QR code traces every grain back to farmer Shyam ji's 12-acre farm."
+      },
+      millets: {
+        title: "Organic Millets",
+        price: 129,
+        details: "10+ varieties from tribal farmers in Karnataka's millet heartland. Stone-ground milling preserves bran and germ. Vacuum-packed immediately after milling to lock in nutrients. No chemical preservatives—nature's own shelf life through traditional clay pot storage methods adapted for modern purity."
+      },
+      rice: {
+        title: "Organic Rice",
+        price: 99,
+        details: "Sona Masoori from Tamil Nadu's organic paddy fields. Parboiled using spring water only. De-stoned, polished minimally to retain bran layer. Nitrogen-flushed packaging eliminates oxygen. Every batch fumigated naturally with neem leaves during storage."
+      },
+      turmeric: {
+        title: "Organic Turmeric",
+        price: 299,
+        details: "Hand-picked from Erode's golden fields—world's turmeric capital. Boiled in copper vessels, sun-dried 7 days. Finger-sized rhizomes only (highest curcumin). Steam-sterilized, never irradiated. Micronized without heat to preserve 7%+ curcumin content."
+      },
+      pepper: {
+        title: "Organic Pepper",
+        price: 499,
+        details: "Kerala Tellicherry black pepper—picked fully ripe for deepest flavor. Sun-dried on thatched roofs. Cryo-ground at -196°C to preserve volatile oils. Triple-sieved for uniform granules. Aroma-tested batch approval only."
+      },
+      jowar: {
+        title: "Organic Jowar",
+        price: 79,
+        details: "White jowar from Maharashtra's drought-resistant farms. Whole grain—no polishing. Hammer-milled at low RPM. Stored in temperature-controlled silos. Rich in calcium, iron, protein—complete nutrition preserved."
+      },
+      bajra: {
+        title: "Organic Bajra",
+        price: 85,
+        details: "Rajasthan desert bajra—nature's supergrain. Dry-farmed without irrigation. Stone-ground flour retains 18% dietary fiber. Packed with millet's natural antioxidants. Perfect for diabetes management."
+      },
+      jaggery: {
+        title: "Organic Jaggery",
+        price: 199,
+        details: "Single sugarcane pressings from Kolhapur. Slow-boiled in giant kadhais 12 hours. Hand-stirred 500+ times for perfect texture. No chemicals, sulfur, or phosphates. Rich mineral profile beats white sugar 10x."
+      },
+      mirch: {
+        title: "Organic Mirch",
+        price: 249,
+        details: "Guntur red chilies—hand-picked mature pods only. Sun-dried 10 days to deep red color. Stemless, dust-free processing. 35,000+ Scoville heat units. Natural capsaicin preserved—no bleaching."
+      },
+      honey: {
+        title: "Organic Honey",
+        price: 399,
+        details: "Wild forest multifloral honey from Sunderbans. Extracted using traditional madhu-kari method. Raw, unprocessed, unheated. Crystallizes naturally (proof of purity). Enzyme-active, pollen-rich, antibiotic properties intact."
+      }
+    };
+
+    // Update cart display
+    function updateCartDisplay() {
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      cartCount.textContent = totalItems;
+      cartTotal.textContent = `₹${totalPrice.toLocaleString()}`;
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Your cart is empty</p>';
+        checkoutBtn.style.display = 'none';
+      } else {
+        cartItems.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.title}">
+            <div class="cart-item-details">
+              <h4>${item.title}</h4>
+              <div>₹${item.price}/unit</div>
+              <div class="quantity-controls">
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+              </div>
+              <div><strong>₹${(item.price * item.quantity).toLocaleString()}</strong></div>
+              <button class="btn" style="padding: 8px 16px; font-size: 0.9rem; margin-top: 10px; background: #dc3545;" onclick="removeFromCart('${item.id}')">Remove</button>
+            </div>
+          </div>
+        `).join('');
+        checkoutBtn.style.display = 'block';
+      }
+      
+      localStorage.setItem('verdeCart', JSON.stringify(cart));
+    }
+
+    // Add to cart
+    function addToCart(productId) {
+      const product = productData[productId];
+      const existingItem = cart.find(item => item.id === productId);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: productId,
+          title: product.title,
+          price: product.price,
+          quantity: 1,
+          image: document.querySelector(`[data-product="${productId}"] img`).src
+        });
+      }
+      
+      updateCartDisplay();
+    }
+
+    // Update quantity
+    function updateQuantity(productId, change) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          cart = cart.filter(i => i.id !== productId);
+        }
+        updateCartDisplay();
+      }
+    }
+
+    // Remove from cart
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartDisplay();
+    }
+
+    // Generate order ID
+    function generateOrderId() {
+      return 'VERDE' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
+    }
+
+    // Checkout
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      orderId = generateOrderId();
+      
+      document.getElementById('paymentAmount').textContent = `₹${totalPrice.toLocaleString()}`;
+      document.getElementById('orderId').textContent = orderId;
+      
+      document.getElementById('paymentModal').style.display = 'flex';
+    });
+
+    // Payment method selection
+    document.querySelectorAll('.payment-method').forEach(method => {
+      method.addEventListener('click', () => {
+        document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+        method.classList.add('active');
+        
+        document.querySelectorAll('.payment-form').forEach(form => form.classList.remove('active'));
+        document.getElementById(method.dataset.method + 'Form').classList.add('active');
+      });
+    });
+
+    // Process payment (demo)
+    function processPayment(method) {
+      // Simulate payment processing
+      const payBtn = event.target;
+      payBtn.disabled = true;
+      payBtn.textContent = 'Processing...';
+      
+      setTimeout(() => {
+        // Success simulation
+        document.getElementById('paymentModal').style.display = 'none';
+        document.getElementById('successModal').style.display = 'flex';
+        document.getElementById('successOrderId').textContent = orderId;
+        
+        // Clear cart
+        cart = [];
+        localStorage.removeItem('verdeCart');
+        updateCartDisplay();
+        
+        payBtn.disabled = false;
+        payBtn.textContent = method === 'upi' ? 'Pay Now' : method === 'card' ? 'Pay Securely' : 'Pay Now';
+      }, 2000);
+    }
+
+    // Complete order
+    function completeOrder() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+
+    // Product modal functionality
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const productId = card.dataset.product;
+        const product = productData[productId];
+        
+        document.getElementById('modalBody').innerHTML = `
+          <h2>${product.title}</h2>
+          <div style="font-size: 2rem; color: var(--green); font-weight: 700; margin: 20px 0;">₹${product.price}</div>
+          <p>${product.details}</p>
+          <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid var(--light-green);">
+            <h4 style="color: var(--green);">🔍 Certified Pure</h4>
+            <p>✅ 100% Organic | ✅ Lab Tested | ✅ Traceable | ✅ Chemical-Free</p>
+            <button class="btn" style="margin-top: 20px;" onclick="addToCart('${productId}')">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('productModal').style.display = 'flex';
+      });
+    });
+
+    // Cart sidebar functionality
+    document.getElementById('cartToggle').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('cartSidebar').classList.add('active');
+    });
+
+    document.getElementById('closeCart').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.remove('active');
+    });
+
+    // Close cart when clicking outside
+    document.addEventListener('click', (e) => {
+      const cartSidebar = document.getElementById('cartSidebar');
+      const cartToggle = document.getElementById('cartToggle');
+      if (cartSidebar.classList.contains('active') && !cartSidebar.contains(e.target) && !cartToggle.contains(e.target)) {
+        cartSidebar.classList.remove('active');
+      }
+    });
+
+    // Modal close functionality
+    const productModal = document.getElementById('productModal');
+    const closeBtns = document.querySelectorAll('.close');
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        productModal.style.display = 'none';
+      });
+    });
+
+    productModal.addEventListener('click', (e) => {
+      if (e.target === productModal) {
+        productModal.style.display = 'none';
+      }
+    });
+
+    // Close payment modal
+    document.getElementById('paymentModal').addEventListener('click', (e) => {
+      if (e.target.classList.contains('payment-modal')) {
+        e.target.style.display = 'none';
+      }
+    });
+
+    document.getElementById('successModal').addEventListener('click', (e) => {
+      if (e.target.classList.contains('payment-modal')) {
+        e.target.style.display = 'none';
+      }
+    });
+
+    // GSAP animations
+    gsap.from('.hero-text', { x: -100, opacity: 0, duration: 1.2 });
+    gsap.from('.hero-img', { scale: 0.7, opacity: 0, duration: 1.2, delay: 0.3 });
+
+    gsap.utils.toArray('.product-card').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: card,
+        y: 80,
+        opacity: 0,
+        duration: 0.8
+      });
+    });
+
+    gsap.utils.toArray('.founder-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: card,
+        y: 80,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.2
+      });
+    });
+
+    // Card input formatting
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      let matches = value.match(/\d{4,16}/g);
+      let match = matches && matches[0] || '';
+      let parts = [];
+      
+      for (let i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4));
+      }
+      
+      if (parts.length) {
+        e.target.value = parts.join(' ');
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    document.getElementById('expiryDate').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      if (value.length >= 2) {
+        e.target.value = value.substring(0,2) + '/' + value.substring(2,4);
+      }
+    });
+
+    // Initialize cart display
+    updateCartDisplay();
+  </script>
+</body>
+</html>
