@@ -214,6 +214,9 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      transition: 
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .product-card:hover {
@@ -226,6 +229,20 @@
       object-fit: cover;
       border-radius: 15px;
       margin-bottom: 15px;
+      transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: scale(1);
+      will-change: transform;
+    }
+    
+    /* Hover lift */
+    .product-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 30px 55px rgba(0,0,0,0.12);
+    }
+
+    /* Gentle zoom */
+    .product-card:hover img {
+      transform: scale(1.12);
     }
 
     /* MODAL */
@@ -526,35 +543,39 @@
       box-shadow: 0 25px 50px rgba(0,0,0,0.15);
     }
 
+    /* REPLACE your old founders CSS with this */
+
     .founders {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 60px;
-      align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 40px;
+      align-items: stretch;
     }
 
     .founder-card {
       background: rgba(233, 246, 239, 0.5);
-      padding: 40px;
-      border-radius: 25px;
+      padding: 50px;
+      border-radius: 30px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      width: 100%;
     }
 
     .founder-photo {
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: linear-gradient(45deg, var(--green), var(--accent));
+      overflow: hidden;
       margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
       border: 5px solid white;
-      flex-direction: column;
+
+    }
+
+    .founder-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      align-items: center;
     }
 
     /* FOOTER */
@@ -782,7 +803,7 @@
         <h3>Bajra</h3>
       </div>
       <div class="product-card" data-product="jaggery">
-        <img src="https://www.dhampurgreen.com/cdn/shop/articles/1.png?v=1753444662">
+        <img src="https://cdn1.healthians.com/blog/wp-content/uploads/2025/05/Jaggery-Benefits-1024x576.png">
         <h3>Jaggery</h3>
       </div>
       <div class="product-card" data-product="mirch">
@@ -810,17 +831,70 @@
     </div>
   </section>
 
-  <section id="founders">
-    <div class="section-title">
-      <h2>About the Founders</h2>
-    </div>
-    <div class="founders">
-      <div class="founder-card">
-        <div class="founder-photo">JAGAT PRATAP SINGH BHASKAR</div>
-        <h3>Jagat Pratap Singh Bhaskar</h3>
-        <p><strong>From government service roots to Verde's visionary heart.</strong> Growing up in a disciplined government family taught Jagat resilience and public service. But watching his family's dedication made him realize: <em>"Jobs pay bills, but business builds legacies."</em></p>
-        <p>At Newton School of Technology pursuing B.Tech CSE (AI & ML), Jagat's tech brain + farmer-first passion = Verde's unbreakable purity promise. Every morning, he wakes up hungry to solve India's food crisis.</p>
+  <!-- REPLACE your current founders section with this updated code -->
+
+<section id="founders">
+  <div class="section-title">
+    <h2>About the Founders</h2>
+  </div>
+
+  <div class="founders">
+    
+    <!-- Founder 1 -->
+    <div class="founder-card">
+      <div class="founder-photo">
+        <img src="Founder_image.JPG" alt="Jagat Pratap Singh Bhaskar">
       </div>
+
+      <h3>Jagat Pratap Singh Bhaskar</h3>
+
+      <p>
+        <strong>From government service roots to Verde's visionary heart.</strong>
+        Growing up in a disciplined government family taught Jagat resilience
+        and public service. But watching his family's dedication made him realize:
+        <em>"Jobs pay bills, but business builds legacies."</em>
+      </p>
+
+      <p>
+        At Newton School of Technology pursuing <strong>B.Tech CSE (AI & ML)</strong>,
+        Jagat combines technology with a farmer-first mission to solve
+        India's food purity crisis and build a transparent organic ecosystem.
+      </p>
+
+      <p>
+        Every morning he wakes up with one goal —
+        <strong>restore purity to India's food system.</strong>
+      </p>
+    </div>
+
+    <!-- Co Founder -->
+    <div class="founder-card">
+      <div class="founder-photo">
+        <img src="cofounder_image.JPG" alt="Rakshat Aggarwal">
+      </div>
+
+      <h3>Rakshat Aggarwal</h3>
+
+      <p>
+        <strong>The educator turned entrepreneur powering Verde’s growth.</strong>
+        With a strong teaching background, Rakshat has always believed in
+        simplifying complex ideas and guiding people toward better futures.
+      </p>
+
+      <p>
+        His experience in mentoring and education built sharp leadership,
+        communication, and strategic thinking skills — now helping Verde
+        educate families about clean food and conscious living.
+      </p>
+
+      <p>
+        He works with one mission —
+        <strong>to spread awareness and make organic living accessible to every home.</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
 
   <footer id="contact">
     <h3>VERDÉ</h3>
